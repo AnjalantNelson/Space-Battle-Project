@@ -62,16 +62,27 @@ update() {
 class Projectile {
     constructor(position){
         this.position = position
-        this.velcotiy = velcotiy
+        this.velocity = velocity
 
-        this.radius = 3
+        this.radius = 4
     }
 
-    dreaw() {
+    class AlienProjectile {
+        constructor({position, velocity}) {
+            this.position = position
+            this.velocity = velocity
+
+            this.widht =3,
+            this.height =10
+    
+            this.radius = 4
+        }
+
+    draw() {
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
         c.beginPath()
-        c.arc(this.position.x, this.position.y, this.radius, 0,
-            Math.PI * 2)
-            c.fillStyle = 'red'
+       
+            c.fillStyle = 'white'
             c.fill()
             c.closePath()
     }
@@ -210,27 +221,53 @@ function animate() {
         }
     })
 
-    grids.forEach((grid) => {
+    grids.forEach((grid, gridIndex) => {
         grid.update()
         grid.Alien.forEach((Alien, i) => {
             Alien.update({velocity: grid.velocity})
-
+          
             projectile.foreEach((projectile, j) => {
                 if (
                     projectile.position.y - position.radius <= 
-                    Alien.position.y + Alien.height &&
+                        Alien.position.y + Alien.height &&
                     projectile.position.x + projectile.radius >= 
-                    Alien.position.x && projectile.position.x -
-                    projectile.radius <= invader.position.x
-                    Alien.postition.x && projectile.position.y + )
+                        Alien.position.x && 
+                    projectile.position.x - projectile.radius <= 
+                        Alien.position.x + Alien.width &&
+                    projectile.position.y + projectile.radius >=
+                        Alien.postition.y
+                ) {
 
                     setTimeout(() => {
+                        const alienFound = grid.Alien.find(Alien2 
+                            => 
+                                 Alien2 === Alien
+                            )
+                            const projectileFound = projectiles.find(
+                                projectile2 => projectile2 === projectile
+                            )
+                        })
+                        // remove Alien and Projectile
+                        if (AlienFound && projectileFound) {
                        grid.Alien.splice(i, 1)
                        projectile.splice(j, 1)
+
+if (grid.Alien.length > 0) {
+    const firstAlien = grid.Alien[0]
+    const lastAlien = grid.Alien[grid.Alien.length - 1]
+
+    grid.width = lastAlien.position.x - 
+    firstAlien.position.x + 
+    lastAlien.width
+    grid.position.x = firstAlien.position.x
+} else {
+    grids.splis(gridIndex, 1)
+}
+                        }
                     }, 0)
+                }
             })
-        })
-    })
+        }
 
     if (keys.a.pressed && Ship.position.x >= 0) {
         Ship.velocity.x = -5
